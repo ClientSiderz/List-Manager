@@ -1,33 +1,9 @@
+import os
+import platform
+
 list = []
 
-print('List Manager')
-print(f"Current List: {list}")
-
-def starterMenu():
-    print('''
-Add a number - 1
-Remove a number - 2
-Sort the list - 3
-Manage one of the numbers - 4
-''')
-    startChoice = int(input("> "))
-    if(startChoice == 1):
-        addNumber()
-    elif(startChoice == 2):
-        if len(list) > 0:
-            removeNumber()
-        else:
-            print("Operation failed, the list is empty")
-            starterMenu()
-    elif(startChoice == 3):
-        list.sort()
-        print(f"Current List: {list}")
-        starterMenu()
-    elif(startChoice == 4):
-        print("Manage")
-    else:
-        print("Invalid choice. Please try again.")
-        starterMenu()
+#List Managment Functions
         
 def addNumber():
     print("Enter a number to add to the list: ")
@@ -35,8 +11,7 @@ def addNumber():
     number = int(input("> "))
     list.append(number)
     
-    print(f"Current List: {list}")
-    starterMenu()
+    clearTerminal()
     
 def removeNumber():
     print("Select which number to remove by entering their count: ")
@@ -47,7 +22,59 @@ def removeNumber():
     number = int(input("> "))
     list.remove(list[(number - 1)])
     
-    print(f"Current List: {list}")
-    starterMenu()
+    clearTerminal()
+    
+# Number Management Functions
 
-starterMenu()
+def manageList():
+    print("Which number would you like to manage?")
+    
+
+# Utility Functions
+
+def clearTerminal():
+    if platform.system() == 'Windows':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+# While loop to keep the program running until the user decides to exit
+
+while True:
+    print('------------------')
+    print('List Manager')
+    print('------------------')
+    print(f"Current List: {list}")
+    print('''
+1 - Add a number
+2 - Remove a number
+3 - Manage numbers in the list
+4 - Sort the list
+5 - Exit
+    ''')
+    try:
+        choice = int(input("> "))
+        match choice:
+            case 1:
+                addNumber()
+            case 2:
+                if len(list) > 0:
+                    removeNumber()
+                else:
+                    print("Operation failed, the list is empty")
+            case 3:
+                clearTerminal()
+                
+                manageList()
+            case 4:
+                clearTerminal()
+                
+                list.sort()
+            case 5:
+                print("Goodbye!")
+                break
+            case _:
+                clearTerminal()
+    except ValueError:
+        clearTerminal()
+        print("Invalid input, Please enter a valid number.")
