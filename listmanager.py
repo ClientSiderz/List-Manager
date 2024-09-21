@@ -14,20 +14,74 @@ def addNumber():
     clearTerminal()
     
 def removeNumber():
-    print("Select which number to remove by entering their count: ")
-    
-    for n in list:
-        print(f"{list.index(n) + 1} - {n}")
+    try:
+        clearTerminal()
+                
+        print("Select which number to remove by entering their count: ")
         
-    number = int(input("> "))
-    list.remove(list[(number - 1)])
-    
-    clearTerminal()
+        for n in list:
+            print(f"{list.index(n) + 1} - {n}")
+            
+        number = int(input("> "))
+        list.remove(list[(number - 1)])
+        
+    except IndexError:
+        clearTerminal()
+        print("Invalid input, Please enter a valid number.")
     
 # Number Management Functions
 
-def manageList():
-    print("Which number would you like to manage?")
+def manageListNumber():
+    try:
+        clearTerminal()
+        
+        print("Which number would you like to manage?")
+        
+        for n in list:
+            print(f"{list.index(n) + 1} - {n}")
+            
+        number = int(input("> "))
+        
+        print("Which mathematical operation would you like to do?")
+        
+        operation = int(input("1 - Addition\n2 - Subtract\n3 - Multiply\n4 - Divide\n> "))
+        
+        match operation:
+            case 1:
+                clearTerminal()
+                
+                print("Enter a number to add to the selected number: ")
+                
+                add = int(input("> "))
+                list[(number - 1)] += add
+            case 2:
+                clearTerminal()
+                
+                print("Enter a number to subtract to the selected number: ")
+                
+                sub = int(input("> "))
+                list[(number - 1)] -= sub
+            case 3:
+                clearTerminal()
+                
+                print("Enter a number to multiply to the selected number: ")
+                
+                mul = int(input("> "))
+                list[(number - 1)] *= mul
+            case 4:
+                clearTerminal()
+                
+                print("Enter a number to divide to the selected number: ")
+                
+                div = int(input("> "))
+                list[(number - 1)] /= div
+            case _:
+                clearTerminal()
+                print("Invalid input, Please enter a valid")
+                    
+    except IndexError:
+        clearTerminal()
+        print("Invalid input, Please enter a valid number.")
     
 
 # Utility Functions
@@ -63,9 +117,10 @@ while True:
                 else:
                     print("Operation failed, the list is empty")
             case 3:
-                clearTerminal()
-                
-                manageList()
+                if len(list) > 0:
+                    manageListNumber()
+                else:
+                    print("Operation failed, the list is empty")
             case 4:
                 clearTerminal()
                 
