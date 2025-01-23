@@ -1,6 +1,17 @@
 import os
+import sys
 import json
 import platform
+import subprocess
+
+required_modules = ['colored', 'pyfiglet']
+
+for module in required_modules:
+    try:
+        __import__(module)
+    except ImportError:
+        print(f"{module} not found. Installing...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", module])
 
 from colored import fore, back, style
 from pyfiglet import Figlet
@@ -18,7 +29,7 @@ def load_session():
         with open(".listmanager/session.json", "r") as file:
             return json.load(file)
     except FileNotFoundError:
-        print(f"{fore("red")}Error: Last session not found. A new session file will be made when exited.{style("reset")}")
+        print(f"{fore('red')}Error: Last session not found. A new session file will be made when exited.{style('reset')}")
         return []
 
 def save_session(data):
@@ -37,7 +48,7 @@ def remove_number(numbers):
     """Removes a number from the list."""
     clear_terminal()
     if not numbers:
-        print(f"{back("red")}Operation failed, the list is empty.{style("reset")}")
+        print(f"{back('red')}Operation failed, the list is empty.{style('reset')}")
         return
 
     print("Select which number to remove by entering their count:")
@@ -48,13 +59,13 @@ def remove_number(numbers):
         numbers.pop(index)
     except (IndexError, ValueError):
         clear_terminal()
-        print(f"{back("red")}Invalid input. Please enter a valid number.{style("reset")}")
+        print(f"{back('red')}Invalid input. Please enter a valid number.{style('reset')}")
 
 def manage_number(numbers):
     """Performs mathematical operations on a number in the list."""
     clear_terminal()
     if not numbers:
-        print(f"{back("red")}Operation failed, the list is empty.{style("reset")}")
+        print(f"{back('red')}Operation failed, the list is empty.{style('reset')}")
         return
 
     print("Which number would you like to manage?")
@@ -84,16 +95,16 @@ def manage_number(numbers):
                 clear_terminal()
                 div = int(input("Enter a number to divide the selected number by: "))
                 if div == 0:
-                    print(f"{back("red")}Cannot divide by zero.{style("reset")}")
+                    print(f"{back('red')}Cannot divide by zero.{style('reset')}")
                 else:
                     number /= div
             case _:
                 clear_terminal()
-                print(f"{back("red")}Invalid input. Please enter a valid number.{style("reset")}")
+                print(f"{back('red')}Invalid input. Please enter a valid number.{style('reset')}")
 
     except (IndexError, ValueError):
         clear_terminal()
-        print(f"{back("red")}Invalid input. Please enter a valid number.{style("reset")}")
+        print(f"{back('red')}Invalid input. Please enter a valid number.{style('reset')}")
 
 if __name__ == "__main__":
     numbers = load_session()
@@ -101,8 +112,8 @@ if __name__ == "__main__":
     while True:
         f = Figlet(font="slant")
         
-        print(f'{fore('dark_green')}{f.renderText("List Manager")}{style("reset")}')
-        print(f'{fore('dark_goldenrod')}Current List{fore("light_gray")}: {fore("white")}{numbers}{style("reset")}')
+        print(f'{fore('dark_green')}{f.renderText("List Manager")}{style('reset')}')
+        print(f'{fore('dark_goldenrod')}Current List{fore('light_gray')}: {fore('white')}{numbers}{style('reset')}')
         print('''
 1 - Add a number
 2 - Remove a number
@@ -132,7 +143,7 @@ if __name__ == "__main__":
                     break
                 case _:
                     clear_terminal()
-                    print(f"{back("red")}Invalid input. Please enter a valid number.{style("reset")}")
+                    print(f"{back('red')}Invalid input. Please enter a valid number.{style('reset')}")
         except ValueError:
             clear_terminal()
-            print(f"{back("red")}Invalid input. Please enter a valid number.{style("reset")}")
+            print(f"{back('red')}Invalid input. Please enter a valid number.{style('reset')}")
