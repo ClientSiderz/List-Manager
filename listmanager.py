@@ -18,7 +18,7 @@ def load_session():
         with open(".listmanager/session.json", "r") as file:
             return json.load(file)
     except FileNotFoundError:
-        print(f"{fore.red}Error: Last session not found. A new session file will be made when exited.{style.reset}")
+        print(f"{fore("red")}Error: Last session not found. A new session file will be made when exited.{style("reset")}")
         return []
 
 def save_session(data):
